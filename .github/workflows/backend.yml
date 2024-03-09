@@ -37,3 +37,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3 # Utilizamos la acción de login de Docker del marketplace
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN}}
+      - name: Build Github Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./back-end-app
+          push: true
+          tags: ghcr.io/${{ github.actor }}/ci-cd-example-back:latest # Añadimos el tag de la imagen apuntando al registry de Github
