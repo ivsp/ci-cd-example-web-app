@@ -12,6 +12,9 @@ jobs:
       run:
         working-directory: ./back-end-app
     runs-on: ubuntu-latest
+    permissions: # Añadimos permisos para que la acción pueda leer y escribir en el registry de Github
+      packages: write
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
